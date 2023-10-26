@@ -1,9 +1,9 @@
 package main
 
 import (
-	"context"
+	"encoding/json"
 	"fmt"
-	"github.com/sashabaranov/go-openai"
+	"go-openapi-gp/gpt"
 	"log"
 )
 
@@ -13,24 +13,23 @@ func main() {
 		log.Fatal(err)
 	}
 
-	client := openai.NewClient(config.ApiKey)
-	resp, err := client.CreateChatCompletion(
-		context.Background(),
-		openai.ChatCompletionRequest{
-			Model: openai.GPT3Dot5Turbo,
-			Messages: []openai.ChatCompletionMessage{
-				{
-					Role:    openai.ChatMessageRoleUser,
-					Content: "안녕반가워!",
-				},
-			},
-		},
-	)
-
+	resp, err := gpt.Chat(config.ApiKey, "내일 날씨에 대해서 예상해줘")
 	if err != nil {
-		fmt.Printf("ChatCompletion error: %v\n", err)
 		return
 	}
+	prettyPrint(resp)
 
-	fmt.Println(resp.Choices[0].Message.Content)
+	resp2, err := gpt.ImageGenerate(config.ApiKey, "이별문자 생성기에 대한 단순한 이미지를 생성해줘")
+	if err != nil {
+		return
+	}
+	prettyPrint(resp2)
+}
+
+func prettyPrint(obj interface{}) {
+	b, err := json.MarshalIndent(obj, "", "  ")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Print(string(b))
 }

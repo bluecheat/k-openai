@@ -1,4 +1,4 @@
-module go-openapi-gp
+module go-openai-gpt
 
 go 1.21.1
 
