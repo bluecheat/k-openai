@@ -14,7 +14,7 @@ func ImageGenerate(apiKey string, prompt string) (*openai.ImageResponse, error) 
 		openai.ImageRequest{
 			Prompt:         prompt,
 			N:              1,
-			ResponseFormat: openai.CreateImageResponseFormatURL,
+			ResponseFormat: openai.CreateImageResponseFormatB64JSON,
 			Size:           openai.CreateImageSize256x256,
 		},
 	)
