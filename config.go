@@ -1,4 +1,4 @@
-package kopenaigpt
+package kopenai
 
 import (
 	"gopkg.in/yaml.v3"

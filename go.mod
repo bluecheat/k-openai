@@ -1,4 +1,4 @@
-module kopenaigpt
+module kopenai
 
 go 1.21.1
 
