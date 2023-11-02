@@ -1,4 +1,4 @@
-module kopenai
+module github.com/bluecheat/k-openai
 
 go 1.21.1
 
