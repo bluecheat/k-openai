@@ -1,8 +1,9 @@
-package kopenai
+package kopenai_test
 
 import (
 	"context"
 	"encoding/base64"
+	kopenai "github.com/bluecheat/k-openai"
 	"github.com/sashabaranov/go-openai"
 	"os"
 	"testing"
@@ -11,16 +12,16 @@ import (
 
 func TestKopenai_Chat(t *testing.T) {
 
-	config, err := LoadConfiguration("env.yaml")
+	config, err := kopenai.LoadConfiguration("env.yaml")
 	if err != nil {
 		t.Error(err)
 		return
 	}
 
-	kopenai := NewKopenAiGpt(config)
+	client := kopenai.NewKopenAiGpt(config)
 
 	ctx := context.Background()
-	resp, err := kopenai.Chat(ctx, openai.ChatCompletionRequest{
+	resp, err := client.Chat(ctx, openai.ChatCompletionRequest{
 		Model: openai.GPT3Dot5Turbo,
 		Messages: []openai.ChatCompletionMessage{
 			{
@@ -28,14 +29,14 @@ func TestKopenai_Chat(t *testing.T) {
 				Content: "안녕 너의 이름은 뭐니?",
 			},
 		},
-	}, ChatTransOption{
-		InputPrompt: &TransOption{
-			Source: KO,
-			Target: EN,
+	}, kopenai.ChatTransOption{
+		InputPrompt: &kopenai.TransOption{
+			Source: kopenai.KO,
+			Target: kopenai.EN,
 		},
-		OutputPrompt: &TransOption{
-			Source: EN,
-			Target: KO,
+		OutputPrompt: &kopenai.TransOption{
+			Source: kopenai.EN,
+			Target: kopenai.KO,
 		},
 	})
 	if err != nil {
@@ -47,24 +48,24 @@ func TestKopenai_Chat(t *testing.T) {
 
 func TestKopenai_Image(t *testing.T) {
 
-	config, err := LoadConfiguration("env.yaml")
+	config, err := kopenai.LoadConfiguration("env.yaml")
 	if err != nil {
 		t.Error(err)
 		return
 	}
 
-	kopenai := NewKopenAiGpt(config)
+	client := kopenai.NewKopenAiGpt(config)
 
 	ctx := context.Background()
-	resp, err := kopenai.ImageGenerate(ctx, openai.ImageRequest{
+	resp, err := client.ImageGenerate(ctx, openai.ImageRequest{
 		Prompt:         "업무, 개발, AI개발",
 		N:              1,
 		Size:           openai.CreateImageSize256x256,
 		ResponseFormat: openai.CreateImageResponseFormatB64JSON,
-	}, ImageTransOption{
-		InputPrompt: &TransOption{
-			Source: KO,
-			Target: EN,
+	}, kopenai.ImageTransOption{
+		InputPrompt: &kopenai.TransOption{
+			Source: kopenai.KO,
+			Target: kopenai.EN,
 		},
 	})
 	if err != nil {
