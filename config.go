@@ -6,11 +6,13 @@ import (
 	"path/filepath"
 )
 
-type AiConfig struct {
-	Openai struct {
-		ApiKey string `yaml:"apiKey"`
-	} `yaml:"openai"`
-	Naver NaverOpenApiConfig `yaml:"naver"`
+type Config struct {
+	Openai OpenAiConfig       `yaml:"openai"`
+	Naver  NaverOpenApiConfig `yaml:"naver"`
+}
+
+type OpenAiConfig struct {
+	ApiKey string `yaml:"apiKey"`
 }
 
 type NaverOpenApiConfig struct {
@@ -18,13 +20,13 @@ type NaverOpenApiConfig struct {
 	ClientSecret string `yaml:"clientSecret"`
 }
 
-func LoadConfiguration(envFile string) (*AiConfig, error) {
+func LoadConfiguration(envFile string) (*Config, error) {
 	filename, _ := filepath.Abs(envFile)
 	yamlFile, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	config := &AiConfig{}
+	config := &Config{}
 	err = yaml.Unmarshal(yamlFile, config)
 	if err != nil {
 		return nil, err

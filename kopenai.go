@@ -27,10 +27,10 @@ type KopenAiGpt struct {
 	naverClient  *NaverOpenApi
 	openaiClient *openai.Client
 
-	config *AiConfig
+	config *Config
 }
 
-func NewKopenAiGpt(config *AiConfig) *KopenAiGpt {
+func NewKopenAiGpt(config *Config) *KopenAiGpt {
 	validConfig(config)
 	client := openai.NewClient(config.Openai.ApiKey)
 	return &KopenAiGpt{
@@ -142,7 +142,7 @@ func (k *KopenAiGpt) transImageRequest(ctx context.Context, request *openai.Imag
 	return nil
 }
 
-func validConfig(config *AiConfig) {
+func validConfig(config *Config) {
 	if config == nil || config.Openai.ApiKey == "" || config.Naver.ClientId == "" || config.Naver.ClientSecret == "" {
 		log.Fatalln("empty openai key or naver client info")
 	}
