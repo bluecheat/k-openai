@@ -1,4 +1,4 @@
-module go-openai-gpt
+module kopenaigpt
 
 go 1.21.1
 

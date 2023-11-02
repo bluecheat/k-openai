@@ -1,4 +1,4 @@
-package main
+package kopenaigpt
 
 import (
 	"gopkg.in/yaml.v3"
@@ -6,17 +6,25 @@ import (
 	"path/filepath"
 )
 
-type OpenApiConfiguration struct {
-	ApiKey string `yaml:"key"`
+type AiConfig struct {
+	Openai struct {
+		ApiKey string `yaml:"apiKey"`
+	} `yaml:"openai"`
+	Naver NaverOpenApiConfig `yaml:"naver"`
 }
 
-func LoadConfiguration(envFile string) (*OpenApiConfiguration, error) {
+type NaverOpenApiConfig struct {
+	ClientId     string `yaml:"clientId"`
+	ClientSecret string `yaml:"clientSecret"`
+}
+
+func LoadConfiguration(envFile string) (*AiConfig, error) {
 	filename, _ := filepath.Abs(envFile)
 	yamlFile, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	config := &OpenApiConfiguration{}
+	config := &AiConfig{}
 	err = yaml.Unmarshal(yamlFile, config)
 	if err != nil {
 		return nil, err
