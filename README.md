@@ -19,7 +19,7 @@ K-openai는 OpenAI의 API 사용을 위한 프롬프트 작성 시 파파고 번
 ## 설치 방법
 터미널 또는 명령 프롬프트를 열고 다음 명령어를 실행하여 의존성을 설치합니다.
 ```
-go get -u github.com/bluecheat/k-openai@v0.1.1
+go get -u github.com/bluecheat/k-openai@v0.1.3
 ```
 
 ## Config 설정 방법
